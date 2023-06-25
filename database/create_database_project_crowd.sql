@@ -1,0 +1,1 @@
+create database `project_crowd` character set utf8mb4;

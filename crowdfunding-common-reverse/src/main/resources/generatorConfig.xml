@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<!-- myBatis逆向工程conf文件 -->
+<generatorConfiguration>
+    <context id="mysql" targetRuntime="MyBatis3">
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+        <!-- 連接資訊 -->
+        <jdbcConnection
+                driverClass="com.mysql.cj.jdbc.Driver"
+                connectionURL="jdbc:mysql://localhost:3306/project_crowd?serverTimezone=UTC"
+                userId="root"
+                password="123456">
+        </jdbcConnection>
+
+        <!-- false : 將DECIMAL和NUMERIC解析為Integer
+             true  : 解析為java.math.BigDecimal -->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!-- 生成entity的路徑 -->
+        <javaModelGenerator targetPackage="org.hsin.crowd.entity"
+                            targetProject="../crowdfunding-admin-entity/src/main/java">
+            <!-- 是否讓schema作為包的後綴 -->
+            <property name="enableSubPackages" value="false"/>
+            <!-- 清理從資料庫返回的值的前後空格 -->
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!-- XxxMapper.xml映射文件生成的路徑 -->
+        <sqlMapGenerator targetPackage="mybatis.mapper"
+                         targetProject="../crowdfunding-admin-webui/src/main/resources">
+            <!-- 是否讓schema作為包的後綴 -->
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+
+        <!-- Mapper接口生成的位子 -->
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="org.hsin.crowd.mapper"
+                             targetProject="../crowdfunding-admin-component/src/main/java">
+            <!-- 是否讓schema作為包的後綴 -->
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+
+        <!-- 資料庫表名和entity類對應 -->
+        <table tableName="t_admin" domainObjectName="Admin"/>
+
+    </context>
+</generatorConfiguration>
