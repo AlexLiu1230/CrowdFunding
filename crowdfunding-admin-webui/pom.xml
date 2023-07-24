@@ -26,6 +26,22 @@
             <scope>test</scope>
         </dependency>
 
+<!--        &lt;!&ndash; 導入Servlet容器中相關依賴 &ndash;&gt;-->
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/jakarta.servlet/jakarta.servlet-api &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>jakarta.servlet</groupId>-->
+<!--            <artifactId>jakarta.servlet-api</artifactId>-->
+<!--            <scope>provided</scope>-->
+<!--        </dependency>-->
+
+<!--        &lt;!&ndash; JSP頁面使用的依賴 &ndash;&gt;-->
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/javax.servlet.jsp/javax.servlet.jsp-api &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>javax.servlet.jsp</groupId>-->
+<!--            <artifactId>javax.servlet.jsp-api</artifactId>-->
+<!--            <scope>provided</scope>-->
+<!--        </dependency>-->
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>

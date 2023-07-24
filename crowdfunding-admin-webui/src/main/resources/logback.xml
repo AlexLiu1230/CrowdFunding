@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="true">
+    <!--指定log輸出的位置-->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!--log输出的格式-->
+            <pattern>[%d{HH:mm:ss.SSS}] [%-5level] [%-8thread] [%logger] [%msg]%n</pattern>
+        </encoder>
+    </appender>
+    <!--设置全域log等級-->
+    <root level="DEBUG">
+        <!--指定打印log的appender，通過"STDOUT"引用了前面配置的appender-->
+        <appender-ref ref="STDOUT" />
+    </root>
+    <!--根據特殊需求指定局部log等級-->
+    <logger name="org.hsin.crowd.mapper" level="DEBUG"/>
+</configuration>

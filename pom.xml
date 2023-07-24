@@ -108,20 +108,6 @@
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-classic</artifactId>
                 <version>1.4.8</version>
-                <scope>test</scope>
-            </dependency>
-            <!-- 其他Log框架的中間轉換包 -->
-            <!-- https://mvnrepository.com/artifact/org.slf4j/jcl-over-slf4j -->
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>jcl-over-slf4j</artifactId>
-                <version>${slf4j.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/org.slf4j/jul-to-slf4j -->
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>jul-to-slf4j</artifactId>
-                <version>${slf4j.version}</version>
             </dependency>
 
             <!-- Spring進行JSON資料轉換的依賴 -->

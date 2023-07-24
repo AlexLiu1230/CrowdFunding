@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--配置自動掃描的包，主要是為了把service掃描進IOC容器中-->
+    <context:component-scan base-package="org.hsin.crowd.service"/>
+
+    <!--配置事務管理器-->
+    <bean id="dataSourceTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <!--裝配數據源-->
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--配置事務通知-->
+    <tx:advice id="txAdvice" transaction-manager="dataSourceTransactionManager">
+        <!--配置事務屬性-->
+        <tx:attributes>
+            <!--查詢方法：配置only read屬性，讓DB知道這是查詢操作，能夠進行優化-->
+            <tx:method name="get*" read-only="true"/>
+            <tx:method name="find*" read-only="true"/>
+            <tx:method name="query*" read-only="true"/>
+            <tx:method name="count*" read-only="true"/>
+
+            <!--增刪改方法：配置事務傳播行為，回滾異常-->
+            <tx:method name="save*" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception"/>
+            <tx:method name="update*" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception"/>
+            <tx:method name="remove*" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception"/>
+            <tx:method name="batch*" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <!--配置AOP-->
+    <aop:config>
+        <!--切入點表達式-->
+        <aop:pointcut id="txPointcut" expression="execution(* *..*ServiceImpl.*(..))"/>
+        <!--將切入點表達式和事物通知關聯起來-->
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"/>
+    </aop:config>
+</beans>
