@@ -1,8 +1,11 @@
 package org.hsin.crowd.mvc.handler;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.hsin.crowd.entity.Admin;
 import org.hsin.crowd.entity.Student;
 import org.hsin.crowd.service.AdminService;
+import org.hsin.crowd.util.CrowdUtil;
+import org.hsin.crowd.util.ResultEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,11 +36,14 @@ public class TestHandler {
     private static final Logger logger = LoggerFactory.getLogger(TestHandler.class);
 
     @RequestMapping("/test/ssm.html")
-    public String testSsm(ModelMap modelMap) {
-
+    public String testSsm(ModelMap modelMap, HttpServletRequest request) {
+        boolean isAjaxRequestResult = CrowdUtil.isAjaxRequest(request);
+        logger.info("isAjaxRequestResult="+isAjaxRequestResult);
         List<Admin> adminList = adminService.getAll();
         modelMap.addAttribute("AdminList", adminList);
-
+        //System.out.println(10/0);
+        String a = null;
+        System.out.println(a.length());
         return "target";
     }
 
@@ -60,10 +66,14 @@ public class TestHandler {
     }
 
     @ResponseBody
-    @RequestMapping("/send/array/complex/object.html")
-    public String testReceiveComposeObject(@RequestBody Student student) {
+    @RequestMapping("/send/array/complex/object.json")
+    public ResultEntity<Student> testReceiveComposeObject(@RequestBody Student student, HttpServletRequest request) {
+        boolean isAjaxRequestResult = CrowdUtil.isAjaxRequest(request);
+        String a = null;
+        System.out.println(a.length());
+        logger.info("isAjaxRequestResult="+isAjaxRequestResult);
         logger.info(student.toString());
-        return "success";
+        return ResultEntity.successWithData(student);
     }
 
 }
