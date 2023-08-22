@@ -30,5 +30,19 @@
 
     <!--配置view-controller直接把請求名稱跟視圖關聯起來，不寫handler-->
     <mvc:view-controller path="/admin/to/login/page.html" view-name="admin-login"/>
+    <mvc:view-controller path="/admin/to/main/page.html" view-name="admin-main"/>
+
+    <!--註冊攔截器-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <!--配置要攔截的資源-->
+            <mvc:mapping path="/**"/>
+            <!--配置不攔截的資源-->
+            <mvc:exclude-mapping path="/admin/to/login/page.html"/>
+            <mvc:exclude-mapping path="/admin/do/login.html"/>
+            <mvc:exclude-mapping path="/admin/do/logout.html"/>
+            <bean class="org.hsin.crowd.mvc.interceptor.LoginInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 
 </beans>

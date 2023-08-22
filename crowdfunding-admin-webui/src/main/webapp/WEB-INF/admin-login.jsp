@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="css/login.css">
     <style>
     </style>
+    <title></title>
 </head>
 
 <body>
@@ -37,12 +38,15 @@
         <h2 class="form-signin-heading">
             <i class="glyphicon glyphicon-log-in"></i>管理員登入
         </h2>
+        <p>${requestScope.exception.message }</p>
         <div class="form-group has-success has-feedback">
-            <input type="text" name="loginAcc" class="form-control" id="inputSuccess4" placeholder="請輸入登入帳號" autofocus>
+            <input type="text" name="loginAcc" class="form-control" id="inputSuccess4" placeholder="請輸入登入帳號"
+                   autofocus>
             <span class="glyphicon glyphicon-user form-control-feedback"></span>
         </div>
         <div class="form-group has-success has-feedback">
-            <input type="text" name="loginPwd" class="form-control" id="inputSuccess4" placeholder="请输入登录密码" style="margin-top:10px;">
+            <input type="password" name="loginPwd" class="form-control" id="inputSuccess4" placeholder="请输入登录密码"
+                   style="margin-top:10px;">
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
         </div>
         <button type="submit" class="btn btn-lg btn-success btn-block">登入</button>

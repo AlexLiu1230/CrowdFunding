@@ -20,6 +20,14 @@
 
         <!--裝配數據源-->
         <property name="dataSource" ref="dataSource"/>
+
+        <!--配置插件-->
+        <property name="plugins">
+            <array>
+                <bean class="com.github.pagehelper.PageInterceptor">
+                </bean>
+            </array>
+        </property>
     </bean>
 
     <!--配置MapperScannerConfigurer來掃描Mapper接口所在的包-->

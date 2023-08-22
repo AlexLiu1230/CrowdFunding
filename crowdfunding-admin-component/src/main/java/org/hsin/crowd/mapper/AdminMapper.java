@@ -1,9 +1,10 @@
 package org.hsin.crowd.mapper;
 
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.hsin.crowd.entity.Admin;
 import org.hsin.crowd.entity.AdminExample;
+
+import java.util.List;
 
 public interface AdminMapper {
     long countByExample(AdminExample example);
@@ -27,4 +28,6 @@ public interface AdminMapper {
     int updateByPrimaryKeySelective(Admin row);
 
     int updateByPrimaryKey(Admin row);
+
+    List<Admin> selectAdminByKeyword(String keyword);
 }

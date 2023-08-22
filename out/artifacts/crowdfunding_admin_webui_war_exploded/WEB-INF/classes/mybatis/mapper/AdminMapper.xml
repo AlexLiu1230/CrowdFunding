@@ -1,228 +1,234 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.hsin.crowd.mapper.AdminMapper">
-  <resultMap id="BaseResultMap" type="org.hsin.crowd.entity.Admin">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="login_acc" jdbcType="VARCHAR" property="loginAcc" />
-    <result column="user_pwd" jdbcType="CHAR" property="userPwd" />
-    <result column="user_name" jdbcType="VARCHAR" property="userName" />
-    <result column="email" jdbcType="VARCHAR" property="email" />
-    <result column="create_time" jdbcType="CHAR" property="createTime" />
-  </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
+    <resultMap id="BaseResultMap" type="org.hsin.crowd.entity.Admin">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="login_acc" jdbcType="VARCHAR" property="loginAcc"/>
+        <result column="user_pwd" jdbcType="CHAR" property="userPwd"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="create_time" jdbcType="CHAR" property="createTime"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
             </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
             </foreach>
-          </trim>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        id, login_acc, user_pwd, user_name, email, create_time
+    </sql>
+    <select id="selectAdminByKeyword" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_admin
+        where t_admin.login_acc like concat("%",#{keyword},"%") or
+        t_admin.user_name like concat("%",#{keyword},"%") or
+        t_admin.email like concat("%",#{keyword},"%")
+    </select>
+    <select id="selectByExample" parameterType="org.hsin.crowd.entity.AdminExample" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_admin
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
         </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Base_Column_List">
-    id, login_acc, user_pwd, user_name, email, create_time
-  </sql>
-  <select id="selectByExample" parameterType="org.hsin.crowd.entity.AdminExample" resultMap="BaseResultMap">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from t_admin
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from t_admin
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from t_admin
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <delete id="deleteByExample" parameterType="org.hsin.crowd.entity.AdminExample">
-    delete from t_admin
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-  <insert id="insert" parameterType="org.hsin.crowd.entity.Admin">
-    insert into t_admin (id, login_acc, user_pwd, 
-      user_name, email, create_time
-      )
-    values (#{id,jdbcType=INTEGER}, #{loginAcc,jdbcType=VARCHAR}, #{userPwd,jdbcType=CHAR}, 
-      #{userName,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{createTime,jdbcType=CHAR}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="org.hsin.crowd.entity.Admin">
-    insert into t_admin
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="loginAcc != null">
-        login_acc,
-      </if>
-      <if test="userPwd != null">
-        user_pwd,
-      </if>
-      <if test="userName != null">
-        user_name,
-      </if>
-      <if test="email != null">
-        email,
-      </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="loginAcc != null">
-        #{loginAcc,jdbcType=VARCHAR},
-      </if>
-      <if test="userPwd != null">
-        #{userPwd,jdbcType=CHAR},
-      </if>
-      <if test="userName != null">
-        #{userName,jdbcType=VARCHAR},
-      </if>
-      <if test="email != null">
-        #{email,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=CHAR},
-      </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="org.hsin.crowd.entity.AdminExample" resultType="java.lang.Long">
-    select count(*) from t_admin
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map">
-    update t_admin
-    <set>
-      <if test="row.id != null">
-        id = #{row.id,jdbcType=INTEGER},
-      </if>
-      <if test="row.loginAcc != null">
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_admin
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from t_admin
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <delete id="deleteByExample" parameterType="org.hsin.crowd.entity.AdminExample">
+        delete from t_admin
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="org.hsin.crowd.entity.Admin">
+        insert into t_admin (id, login_acc, user_pwd,
+                             user_name, email, create_time)
+        values (#{id,jdbcType=INTEGER}, #{loginAcc,jdbcType=VARCHAR}, #{userPwd,jdbcType=CHAR},
+                #{userName,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{createTime,jdbcType=CHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="org.hsin.crowd.entity.Admin">
+        insert into t_admin
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="loginAcc != null">
+                login_acc,
+            </if>
+            <if test="userPwd != null">
+                user_pwd,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="loginAcc != null">
+                #{loginAcc,jdbcType=VARCHAR},
+            </if>
+            <if test="userPwd != null">
+                #{userPwd,jdbcType=CHAR},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=CHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="org.hsin.crowd.entity.AdminExample" resultType="java.lang.Long">
+        select count(*) from t_admin
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update t_admin
+        <set>
+            <if test="row.id != null">
+                id = #{row.id,jdbcType=INTEGER},
+            </if>
+            <if test="row.loginAcc != null">
+                login_acc = #{row.loginAcc,jdbcType=VARCHAR},
+            </if>
+            <if test="row.userPwd != null">
+                user_pwd = #{row.userPwd,jdbcType=CHAR},
+            </if>
+            <if test="row.userName != null">
+                user_name = #{row.userName,jdbcType=VARCHAR},
+            </if>
+            <if test="row.email != null">
+                email = #{row.email,jdbcType=VARCHAR},
+            </if>
+            <if test="row.createTime != null">
+                create_time = #{row.createTime,jdbcType=CHAR},
+            </if>
+        </set>
+        <if test="example != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update t_admin
+        set id = #{row.id,jdbcType=INTEGER},
         login_acc = #{row.loginAcc,jdbcType=VARCHAR},
-      </if>
-      <if test="row.userPwd != null">
         user_pwd = #{row.userPwd,jdbcType=CHAR},
-      </if>
-      <if test="row.userName != null">
         user_name = #{row.userName,jdbcType=VARCHAR},
-      </if>
-      <if test="row.email != null">
         email = #{row.email,jdbcType=VARCHAR},
-      </if>
-      <if test="row.createTime != null">
-        create_time = #{row.createTime,jdbcType=CHAR},
-      </if>
-    </set>
-    <if test="example != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map">
-    update t_admin
-    set id = #{row.id,jdbcType=INTEGER},
-      login_acc = #{row.loginAcc,jdbcType=VARCHAR},
-      user_pwd = #{row.userPwd,jdbcType=CHAR},
-      user_name = #{row.userName,jdbcType=VARCHAR},
-      email = #{row.email,jdbcType=VARCHAR},
-      create_time = #{row.createTime,jdbcType=CHAR}
-    <if test="example != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="org.hsin.crowd.entity.Admin">
-    update t_admin
-    <set>
-      <if test="loginAcc != null">
-        login_acc = #{loginAcc,jdbcType=VARCHAR},
-      </if>
-      <if test="userPwd != null">
-        user_pwd = #{userPwd,jdbcType=CHAR},
-      </if>
-      <if test="userName != null">
-        user_name = #{userName,jdbcType=VARCHAR},
-      </if>
-      <if test="email != null">
-        email = #{email,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=CHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="org.hsin.crowd.entity.Admin">
-    update t_admin
-    set login_acc = #{loginAcc,jdbcType=VARCHAR},
-      user_pwd = #{userPwd,jdbcType=CHAR},
-      user_name = #{userName,jdbcType=VARCHAR},
-      email = #{email,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=CHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+        create_time = #{row.createTime,jdbcType=CHAR}
+        <if test="example != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="org.hsin.crowd.entity.Admin">
+        update t_admin
+        <set>
+            <if test="loginAcc != null">
+                login_acc = #{loginAcc,jdbcType=VARCHAR},
+            </if>
+            <if test="userPwd != null">
+                user_pwd = #{userPwd,jdbcType=CHAR},
+            </if>
+            <if test="userName != null">
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=CHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="org.hsin.crowd.entity.Admin">
+        update t_admin
+        set login_acc   = #{loginAcc,jdbcType=VARCHAR},
+            user_pwd    = #{userPwd,jdbcType=CHAR},
+            user_name   = #{userName,jdbcType=VARCHAR},
+            email       = #{email,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=CHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
 </mapper>

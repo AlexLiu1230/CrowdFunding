@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.hsin.crowd.constant.CrowdConstant;
+import org.hsin.crowd.exception.LoginFailedException;
 import org.hsin.crowd.util.CrowdUtil;
 import org.hsin.crowd.util.ResultEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -35,6 +36,11 @@ public class CrowdExceptionResolver {
     @ExceptionHandler(value = ArithmeticException.class)
     public ModelAndView resolveMathException(ArithmeticException exception, HttpServletRequest request, HttpServletResponse response) throws IOException {
         return commonResolve("system-error", exception, request, response);
+    }
+
+    @ExceptionHandler(value = LoginFailedException.class)
+    public ModelAndView resolveLoginFailedException(LoginFailedException exception, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        return commonResolve("admin-login", exception, request, response);
     }
 
     private ModelAndView commonResolve(String viewName, Exception exception, HttpServletRequest request, HttpServletResponse response) throws IOException {
